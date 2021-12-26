@@ -8,6 +8,5 @@ export const fetchDetails = (id) => async (dispatch) => {
       );
     dispatch({ type: "GET_DETAILS_SUCCESS", payload: res.data});
   } catch (error) {
-    console.log(error);
   }
 };

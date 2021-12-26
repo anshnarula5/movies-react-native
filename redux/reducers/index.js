@@ -1,8 +1,23 @@
 import { combineReducers } from "redux";
-import { movieDetailsReducer, movieListReducer } from "./movieReducers";
+import {
+  actionReducer,
+  comedyReducer,
+  documentaryReducer,
+  horrorReducer,
+  movieDetailsReducer,
+  romanceReducer,
+  topReducer,
+  trendingReducer,
+} from "./movieReducers";
 
 const rootReducer = combineReducers({
-  movieList: movieListReducer,
+  trending: trendingReducer,
+  top: topReducer,
+  action: actionReducer,
+  comedy: comedyReducer,
+  horror: horrorReducer,
+  documentary: documentaryReducer,
+  romance: romanceReducer,
   movieDetails: movieDetailsReducer,
 });
 

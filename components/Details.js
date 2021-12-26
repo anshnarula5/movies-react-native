@@ -1,12 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDetails } from "../redux/actions/fetchDetails";
 
 const Details = ({ route }) => {
+  const [trailerUrl, setTrailerUrl] = useState("");
   const { id } = route.params;
   const dispatch = useDispatch();
   const { loading, details } = useSelector((state) => state.movieDetails);
+  const trailerHandler = (movie) => {
+    if (trailerUrl) {
+      setTrailerUrl("");
+    } else {
+      movieTrailer(movie?.title || "")
+        .then((url) => {
+          const urlParams = new URLSearchParams(new URL(url).searchParams);
+          setTrailerUrl(urlParams.get("v"));
+        })
+    }
+  };
   useEffect(() => {
     dispatch(fetchDetails(id));
   }, [id, dispatch]);
@@ -22,9 +34,24 @@ const Details = ({ route }) => {
             }}
             style={styles.image}
           />
-          <View >
-            <Text style={styles.heading}>{details.title || details.name}</Text>
-            <Text style={styles.details}>{details.overview}</Text>
+          <View style={styles.data}>
+            <View style={styles.header}>
+              <Text style={styles.heading}>
+                {details.title || details.name}
+              </Text>
+              <Text style={styles.text}>{details.release_date} </Text>
+            </View>
+            <Text style={styles.text}>{details.runtime} m </Text>
+            {/* <Text style={styles.text}>{details.original_language} </Text> */}
+            <View style = {styles.genres}>
+                { details.genres&& details.genres.length > 0 && details.genres.map(genre => (
+                  <Text key={Math.random()} style = {styles.genre}>{genre.name}</Text>
+              ))}
+            </View>
+            <Text style={styles.overview}>{details.overview}</Text>
+            <View>
+              <Text style={styles.rating}>{details.vote_average}/10</Text>
+            </View>
           </View>
         </>
       )}
@@ -49,11 +76,41 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 30,
   },
-  details: {
+  overview: {
     color: "white",
     marginVertical: 10,
+    fontSize: 15,
+  },
+  data: {
+    paddingHorizontal: 10,
+  },
+  rating: {
+    color: "cyan",
     fontSize: 20,
   },
+  header: {
+    marginVertical: 10,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: 'wrap',
+    justifyContent: "space-between",
+  },
+  genre: {
+    color: "cyan",
+    borderColor: "cyan",
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+    paddingHorizontal : 10,
+    marginRight : 6
+  },
+  genres: {
+    marginVertical: 10,
+    display: "flex",
+    flexDirection: "row",
+    
+  }
 });
 
 export default Details;

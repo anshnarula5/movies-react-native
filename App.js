@@ -7,16 +7,14 @@ import Main from "./components/Main";
 import Details from "./components/Details";
 import Navbar from "./components/Navbar";
 import store from "./store";
+import List from "./components/List";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <Provider store={store}>
-       <StatusBar
-        animated={true}
-        barStyle="light-content"     
-        hidden={false} />
+      <StatusBar animated={true} barStyle="light-content" hidden={false} />
       <NavigationContainer>
         <View style={styles.container}>
           <Stack.Navigator initialRouteName="Main">
@@ -25,9 +23,43 @@ export default function App() {
               component={Main}
               options={{
                 title: "Home",
+                
                 headerStyle: {
                   backgroundColor: "#161616",
-                  shadowOffset : 1
+                  shadowOffset: 1,
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
+                animationEnabled : true
+              }}
+            />
+            <Stack.Screen
+              name="List"
+              component={List}
+              options={{
+                title: "Home",
+                
+                headerStyle: {
+                  backgroundColor: "#161616",
+                  shadowOffset: 1,
+                },
+                headerTintColor: "#fff",
+                headerTitleStyle: {
+                  fontWeight: "bold",
+                },
+                animationEnabled : true
+              }}
+            />
+            <Stack.Screen
+              name="Details"
+              component={Details}
+              options={{
+                title: "Movie Info",
+                headerStyle: {
+                  backgroundColor: "#161616",
+                  shadowOffset: 1,
                 },
                 headerTintColor: "#fff",
                 headerTitleStyle: {
@@ -35,7 +67,6 @@ export default function App() {
                 },
               }}
             />
-            <Stack.Screen name="Details" component={Details} />
           </Stack.Navigator>
         </View>
       </NavigationContainer>
