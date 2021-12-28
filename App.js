@@ -1,5 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import {
+  CardStyleInterpolators,
+  createStackNavigator,
+} from "@react-navigation/stack";
 import React from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 import { Provider } from "react-redux";
@@ -17,13 +20,17 @@ export default function App() {
       <StatusBar animated={true} barStyle="light-content" hidden={false} />
       <NavigationContainer>
         <View style={styles.container}>
-          <Stack.Navigator initialRouteName="Main">
+          <Stack.Navigator
+            initialRouteName="Main"
+            screenOptions={{
+              cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            }}
+          >
             <Stack.Screen
               name="Main"
               component={Main}
               options={{
                 title: "Home",
-                
                 headerStyle: {
                   backgroundColor: "#161616",
                   shadowOffset: 1,
@@ -32,7 +39,7 @@ export default function App() {
                 headerTitleStyle: {
                   fontWeight: "bold",
                 },
-                animationEnabled : true
+                animationEnabled: true,
               }}
             />
             <Stack.Screen
@@ -40,7 +47,7 @@ export default function App() {
               component={List}
               options={{
                 title: "Home",
-                
+                gestureDirection: "horizontal",
                 headerStyle: {
                   backgroundColor: "#161616",
                   shadowOffset: 1,
@@ -49,7 +56,7 @@ export default function App() {
                 headerTitleStyle: {
                   fontWeight: "bold",
                 },
-                animationEnabled : true
+                animationEnabled: true,
               }}
             />
             <Stack.Screen
@@ -57,6 +64,7 @@ export default function App() {
               component={Details}
               options={{
                 title: "Movie Info",
+                gestureDirection: "horizontal",
                 headerStyle: {
                   backgroundColor: "#161616",
                   shadowOffset: 1,
